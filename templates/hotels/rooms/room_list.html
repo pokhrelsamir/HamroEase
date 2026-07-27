@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2>Room List</h2>
+
+        <a href="{% url 'room_create' %}" class="btn btn-primary">
+            Add Room
+        </a>
+
+    </div>
+
+    {% if rooms %}
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Room</th>
+                    <th>Hotel</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for room in rooms %}
+
+                <tr>
+
+                    <td>{{ room.room_number }}</td>
+
+                    <td>{{ room.hotel.name }}</td>
+
+                    <td>{{ room.get_room_type_display }}</td>
+
+                    <td>£{{ room.price_per_night }}</td>
+
+                    <td>{{ room.get_status_display }}</td>
+
+                    <td>
+
+                        <a href="{% url 'room_detail' room.id %}" class="btn btn-info btn-sm">
+                            View
+                        </a>
+
+                        <a href="{% url 'room_update' room.id %}" class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="{% url 'room_delete' room.id %}" class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    {% else %}
+
+        <div class="alert alert-info">
+
+            No rooms have been added yet.
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

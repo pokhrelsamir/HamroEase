@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>My Hotels</h2>
+
+<a href="{% url 'hotel_create' %}" class="btn btn-success mb-3">
+    Add Hotel
+</a>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Rating</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for hotel in hotels %}
+
+    <tr>
+
+        <td>{{ hotel.name }}</td>
+
+        <td>{{ hotel.city }}</td>
+
+        <td>{{ hotel.star_rating }}</td>
+
+        <td>
+
+            <a href="{% url 'hotel_detail' hotel.id %}" class="btn btn-info btn-sm">
+                View
+            </a>
+
+            <a href="{% url 'hotel_update' hotel.id %}" class="btn btn-warning btn-sm">
+                Edit
+            </a>
+
+            <a href="{% url 'hotel_delete' hotel.id %}" class="btn btn-danger btn-sm">
+                Delete
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="4">No hotels found.</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

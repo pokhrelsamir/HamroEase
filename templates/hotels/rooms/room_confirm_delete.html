@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delete Room
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card border-danger shadow">
+
+        <div class="card-header bg-danger text-white">
+
+            <h3>
+
+                Delete Room
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <p class="fs-5">
+
+                Are you sure you want to delete
+
+                <strong>
+
+                    Room {{ room.room_number }}
+
+                </strong>
+
+                ?
+
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-danger">
+
+                    Yes, Delete
+
+                </button>
+
+                <a
+                    href="{% url 'room_list' %}"
+                    class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

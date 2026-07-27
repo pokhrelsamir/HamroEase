@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-danger text-white">
+
+            Cancel Booking
+
+        </div>
+
+        <div class="card-body">
+
+            <p>
+
+                Are you sure you want to cancel
+
+                <strong>{{ booking.booking_number }}</strong>?
+
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    class="btn btn-danger">
+
+                    Yes, Cancel
+
+                </button>
+
+                <a href="{% url 'booking_detail' booking.pk %}"
+                   class="btn btn-secondary">
+
+                    No
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

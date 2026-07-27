@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3>My Profile</h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}"
+                                 class="rounded-circle"
+                                 width="150"
+                                 height="150">
+                        {% else %}
+                            <img src="https://via.placeholder.com/150"
+                                 class="rounded-circle">
+                        {% endif %}
+
+                    </div>
+
+                    <table class="table table-bordered">
+
+                        <tr>
+                            <th>Full Name</th>
+                            <td>{{ user.full_name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{ user.phone_number }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Role</th>
+                            <td>{{ user.get_role_display }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Joined</th>
+                            <td>{{ user.date_joined }}</td>
+                        </tr>
+
+                    </table>
+
+                    <a href="{% url 'profile_update' %}"
+                       class="btn btn-primary">
+
+                        Edit Profile
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

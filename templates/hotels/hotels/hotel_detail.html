@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ hotel.name }}</h2>
+
+{% if hotel.thumbnail %}
+<img src="{{ hotel.thumbnail.url }}" class="img-fluid mb-3" width="400">
+{% endif %}
+
+<p><strong>Description:</strong> {{ hotel.description }}</p>
+<p><strong>Address:</strong> {{ hotel.address }}</p>
+<p><strong>City:</strong> {{ hotel.city }}</p>
+<p><strong>Country:</strong> {{ hotel.country }}</p>
+<p><strong>Email:</strong> {{ hotel.email }}</p>
+<p><strong>Phone:</strong> {{ hotel.phone }}</p>
+
+<a href="{% url 'hotel_list' %}" class="btn btn-secondary">
+    Back
+</a>
+
+{% endblock %}

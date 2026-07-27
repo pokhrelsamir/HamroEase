@@ -1,0 +1,59 @@
+# Django
+Django>=5.2,<6.0
+
+# Database
+psycopg[binary]
+
+# Environment Variables
+python-decouple
+
+# Image Processing
+Pillow
+
+# HTTP Requests
+requests
+
+# Payment Gateways
+stripe
+
+# CORS
+django-cors-headers
+
+# Static Files
+whitenoise
+
+# PostgreSQL URL Parsing
+dj-database-url
+
+# Forms
+django-crispy-forms
+crispy-bootstrap5
+
+# Rich Text (optional)
+django-ckeditor
+
+# API (optional but recommended)
+djangorestframework
+
+# Filtering
+django-filter
+
+# Development
+ipython
+
+# Production Server
+gunicorn
+
+
+reportlab
+openpyxl
+xlsxwriter
+python-decouple
+djangorestframework
+drf-spectacular
+django-filter
+djangorestframework-simplejwt
+
+djangorestframework
+drf-spectacular
+python-dotenv

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h3>{{ booking.booking_number }}</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <p><strong>Hotel:</strong> {{ booking.hotel.name }}</p>
+
+            <p><strong>Room:</strong> {{ booking.room.room_number }}</p>
+
+            <p><strong>Check In:</strong> {{ booking.check_in }}</p>
+
+            <p><strong>Check Out:</strong> {{ booking.check_out }}</p>
+
+            <p><strong>Total:</strong> £{{ booking.total_amount }}</p>
+
+            <p><strong>Status:</strong> {{ booking.get_status_display }}</p>
+
+            <p><strong>Payment:</strong> {{ booking.get_payment_status_display }}</p>
+
+            <a href="{% url 'booking_update' booking.pk %}"
+               class="btn btn-warning">
+
+                Edit
+
+            </a>
+
+            <a href="{% url 'booking_delete' booking.pk %}"
+               class="btn btn-danger">
+
+                Cancel Booking
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

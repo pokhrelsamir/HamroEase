@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Bookings</h2>
+
+        <a href="{% url 'booking_create' %}"
+           class="btn btn-success">
+
+            New Booking
+
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-hover">
+
+        <thead>
+
+            <tr>
+
+                <th>Booking</th>
+                <th>Hotel</th>
+                <th>Room</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th></th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for booking in bookings %}
+
+            <tr>
+
+                <td>{{ booking.booking_number }}</td>
+
+                <td>{{ booking.hotel.name }}</td>
+
+                <td>{{ booking.room.room_number }}</td>
+
+                <td>{{ booking.get_status_display }}</td>
+
+                <td>£{{ booking.total_amount }}</td>
+
+                <td>
+
+                    <a href="{% url 'booking_detail' booking.pk %}"
+                       class="btn btn-sm btn-primary">
+
+                        View
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% empty %}
+
+            <tr>
+
+                <td colspan="6">
+
+                    No bookings available.
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

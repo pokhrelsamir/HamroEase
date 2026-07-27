@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}
+Room Details
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        {% if room.main_image %}
+
+        <img
+            src="{{ room.main_image.url }}"
+            class="card-img-top"
+            style="height:350px;object-fit:cover;">
+
+        {% endif %}
+
+        <div class="card-body">
+
+            <h2>
+
+                Room {{ room.room_number }}
+
+            </h2>
+
+            <hr>
+
+            <p>
+
+                <strong>Hotel:</strong>
+
+                {{ room.hotel.name }}
+
+            </p>
+
+            <p>
+
+                <strong>Type:</strong>
+
+                {{ room.get_room_type_display }}
+
+            </p>
+
+            <p>
+
+                <strong>Description:</strong>
+
+                {{ room.description }}
+
+            </p>
+
+            <p>
+
+                <strong>Price:</strong>
+
+                £{{ room.price_per_night }}
+
+            </p>
+
+            <p>
+
+                <strong>Maximum Guests:</strong>
+
+                {{ room.max_guests }}
+
+            </p>
+
+            <p>
+
+                <strong>Total Beds:</strong>
+
+                {{ room.total_beds }}
+
+            </p>
+
+            <p>
+
+                <strong>Room Size:</strong>
+
+                {{ room.room_size }} sq.ft
+
+            </p>
+
+            <p>
+
+                <strong>Status:</strong>
+
+                {{ room.get_status_display }}
+
+            </p>
+
+            <p>
+
+                <strong>Amenities:</strong>
+
+            </p>
+
+            <ul>
+
+                {% for amenity in room.amenities.all %}
+
+                    <li>
+
+                        {{ amenity.name }}
+
+                    </li>
+
+                {% empty %}
+
+                    <li>
+
+                        No amenities added.
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+            <hr>
+
+            <a
+                href="{% url 'room_update' room.id %}"
+                class="btn btn-warning">
+
+                Edit
+
+            </a>
+
+            <a
+                href="{% url 'room_delete' room.id %}"
+                class="btn btn-danger">
+
+                Delete
+
+            </a>
+
+            <a
+                href="{% url 'room_list' %}"
+                class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
