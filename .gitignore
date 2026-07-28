@@ -29,3 +29,10 @@ staticfiles/
 
 # Migrations cache
 *.pyc
+
+# Media Files
+media/
+/media/
+media/hotels/
+media/profile_pictures/
+media/rooms/

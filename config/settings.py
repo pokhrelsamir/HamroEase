@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "apps.api",
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 # -----------------------------------------------------------------------------
@@ -186,9 +187,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # REST API Integration
 # -----------------------------------------------------------------------------
 
+# Rest Framework
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ),
 }
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
+# REST_FRAMEWORK = {
+#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+# }
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "HamroEase API",
