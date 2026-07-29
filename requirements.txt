@@ -1,60 +1,55 @@
-# Django
+# Django Framework
 Django>=5.2,<6.0
 
 # Database
 psycopg[binary]
+dj-database-url
 
-# Environment Variables
+# Environment Configuration
 python-decouple
+python-dotenv
 
 # Image Processing
 Pillow
 
-# HTTP Requests
+# HTTP Requests & External APIs
 requests
 
-# Payment Gateways
+# Payment Gateway Integration
 stripe
 
-# CORS
+# CORS Handling
 django-cors-headers
 
-# Static Files
+# Static & Media File Management
 whitenoise
 
-# PostgreSQL URL Parsing
-dj-database-url
-
-# Forms
+# Forms & UI Components
 django-crispy-forms
 crispy-bootstrap5
 
-# Rich Text (optional)
+# Rich Text Editor
 django-ckeditor
 
-# API (optional but recommended)
+# Django REST API Development
 djangorestframework
 
-# Filtering
+# API Documentation
+drf-spectacular
+
+# API Authentication
+djangorestframework-simplejwt
+
+# Filtering & Query Utilities
 django-filter
 
-# Development
+# Development Tools
 ipython
 
 # Production Server
 gunicorn
 
-
+# Report & File Generation
 reportlab
 openpyxl
 xlsxwriter
-python-decouple
-djangorestframework
-drf-spectacular
-django-filter
-djangorestframework-simplejwt
-
-
-djangorestframework
-drf-spectacular
-python-dotenv
