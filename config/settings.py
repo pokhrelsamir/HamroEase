@@ -212,12 +212,43 @@ SIMPLE_JWT = {
 #     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 # }
 
+# -----------------------------------------------------------------------------
+# Swagger / OpenAPI Configuration
+# -----------------------------------------------------------------------------
+
 SPECTACULAR_SETTINGS = {
     "TITLE": "HamroEase API",
-    "DESCRIPTION": "Hotel Booking and Management System API Documentation",
+    "DESCRIPTION": "Hotel Booking Management REST API",
     "VERSION": "1.0.0",
-}
+    "SERVE_INCLUDE_SCHEMA": False,
 
+    "TAGS": [
+        {
+            "name": "Authentication",
+            "description": "User authentication and account management.",
+        },
+        {
+            "name": "Hotels",
+            "description": "Hotel management endpoints.",
+        },
+        {
+            "name": "Rooms",
+            "description": "Room management endpoints.",
+        },
+        {
+            "name": "Bookings",
+            "description": "Booking management endpoints.",
+        },
+        {
+            "name": "Payments",
+            "description": "Payment related endpoints.",
+        },
+        {
+            "name": "Reviews",
+            "description": "Review management endpoints.",
+        },
+    ],
+}
 
 # -----------------------------------------------------------------------------
 # Email Integration

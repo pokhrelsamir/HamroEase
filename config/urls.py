@@ -30,6 +30,9 @@ urlpatterns = [
 
     # Hotels API
     path("api/", include("apps.hotels.api_urls")),
+
+    # Booking API
+    path("api/", include("apps.bookings.api_urls")),
     
 
     # API Documentation
