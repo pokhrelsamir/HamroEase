@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "apps.api",
     'rest_framework_simplejwt.token_blacklist',
+    "apps.payments",
 ]
 
 # -----------------------------------------------------------------------------
@@ -221,6 +222,12 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Hotel Booking Management REST API",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+
+    # Keep the order defined in urlpatterns
+    "SORT_OPERATIONS": False,
+
+    # Optional: keep tag order as defined below
+    "SORT_TAGS": False,
 
     "TAGS": [
         {

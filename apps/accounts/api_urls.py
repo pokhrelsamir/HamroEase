@@ -1,33 +1,60 @@
 from django.urls import path
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
 from .api_views import (
     RegisterAPIView,
+    LoginAPIView,
+    RefreshTokenAPIView,
     ProfileAPIView,
-    LogoutAPIView,
     ChangePasswordAPIView,
+    LogoutAPIView,
 )
 
 urlpatterns = [
+    # ==========================================================
+    # Account Registration
+    # ==========================================================
+    path(
+        "register/",
+        RegisterAPIView.as_view(),
+        name="api-register",
+    ),
 
-    # Register
-    path("register/", RegisterAPIView.as_view(), name="api-register"),
+    # ==========================================================
+    # Authentication
+    # ==========================================================
+    path(
+        "login/",
+        LoginAPIView.as_view(),
+        name="api-login",
+    ),
 
-    # Login
-    path("login/", TokenObtainPairView.as_view(), name="api-login"),
+    path(
+        "token/refresh/",
+        RefreshTokenAPIView.as_view(),
+        name="token-refresh",
+    ),
 
-    # Refresh Token
-    path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    # ==========================================================
+    # User Profile
+    # ==========================================================
+    path(
+        "profile/",
+        ProfileAPIView.as_view(),
+        name="api-profile",
+    ),
 
-    # Profile
-    path("profile/", ProfileAPIView.as_view(), name="api-profile"),
+    # ==========================================================
+    # Account Security
+    # ==========================================================
+    path(
+        "change-password/",
+        ChangePasswordAPIView.as_view(),
+        name="api-change-password",
+    ),
 
-    # Logout
-    path("logout/", LogoutAPIView.as_view(), name="api-logout"),
-
-    # Change Password
-    path( "change-password/", ChangePasswordAPIView.as_view(), name="api-change-password" ),
+    path(
+        "logout/",
+        LogoutAPIView.as_view(),
+        name="api-logout",
+    ),
 ]

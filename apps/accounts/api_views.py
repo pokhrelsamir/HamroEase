@@ -6,7 +6,12 @@ from drf_spectacular.utils import (
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from .serializers import (
     RegisterSerializer,
@@ -22,72 +27,42 @@ from .serializers import (
 @extend_schema(
     tags=["Authentication"],
     summary="Register User",
-    description="Create a new user account."
+    description="Create a new user account.",
 )
 class RegisterAPIView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 
+
 # ==========================================================
-# User Profile
+# Login
 # ==========================================================
 
 @extend_schema_view(
-    get=extend_schema(
+    post=extend_schema(
         tags=["Authentication"],
-        summary="View Profile",
-    ),
-    put=extend_schema(
+        summary="Login",
+        description="Authenticate a user and return JWT access and refresh tokens.",
+    )
+)
+class LoginAPIView(TokenObtainPairView):
+    pass
+
+
+# ==========================================================
+# Refresh Token
+# ==========================================================
+
+@extend_schema_view(
+    post=extend_schema(
         tags=["Authentication"],
-        summary="Update Profile",
-    ),
-    patch=extend_schema(
-        tags=["Authentication"],
-        summary="Partial Update Profile",
-    ),
+        summary="Refresh Access Token",
+        description="Generate a new access token using a valid refresh token.",
+    )
 )
-class ProfileAPIView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+class RefreshTokenAPIView(TokenRefreshView):
+    pass
 
-    def get_object(self):
-        return self.request.user
-
-
-# ==========================================================
-# Logout
-# ==========================================================
-
-from drf_spectacular.utils import (
-    extend_schema,
-    extend_schema_view,
-)
-
-from rest_framework import generics, permissions, status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
-from drf_spectacular.utils import extend_schema, extend_schema_view
-
-from .serializers import (
-    RegisterSerializer,
-    UserSerializer,
-    ChangePasswordSerializer,
-)
-
-
-# ==========================================================
-# Register
-# ==========================================================
-
-@extend_schema(
-    tags=["Authentication"],
-    summary="Register User",
-    description="Create a new user account."
-)
-class RegisterAPIView(generics.CreateAPIView):
-    serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny]
 
 # ==========================================================
 # User Profile
@@ -134,12 +109,16 @@ class LogoutAPIView(APIView):
             token.blacklist()
 
             return Response(
-                {"detail": "Logged out successfully."}
+                {
+                    "detail": "Logged out successfully."
+                }
             )
 
         except Exception:
             return Response(
-                {"detail": "Invalid token."},
+                {
+                    "detail": "Invalid refresh token."
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -166,7 +145,9 @@ class ChangePasswordAPIView(APIView):
                 serializer.validated_data["old_password"]
             ):
                 return Response(
-                    {"old_password": "Wrong password."},
+                    {
+                        "old_password": "Wrong password."
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -176,7 +157,9 @@ class ChangePasswordAPIView(APIView):
             user.save()
 
             return Response(
-                {"detail": "Password changed successfully."}
+                {
+                    "detail": "Password changed successfully."
+                }
             )
 
         return Response(

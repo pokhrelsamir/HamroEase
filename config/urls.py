@@ -33,6 +33,9 @@ urlpatterns = [
 
     # Booking API
     path("api/", include("apps.bookings.api_urls")),
+
+    #Payments API
+    path("api/", include("apps.payments.api_urls")),
     
 
     # API Documentation
