@@ -36,6 +36,9 @@ urlpatterns = [
 
     #Payments API
     path("api/", include("apps.payments.api_urls")),
+
+    # Reviews API
+    path("api/", include("apps.reviews.api_urls")),
     
 
     # API Documentation

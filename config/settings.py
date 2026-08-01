@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.api",
     'rest_framework_simplejwt.token_blacklist',
     "apps.payments",
+    "apps.reviews.apps.ReviewsConfig",
 ]
 
 # -----------------------------------------------------------------------------

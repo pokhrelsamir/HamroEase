@@ -86,6 +86,8 @@ class HotelAdmin(admin.ModelAdmin):
         "country",
         "star_rating",
         "is_active",
+        "average_rating",
+        "total_reviews",
         "created_at",
     )
 

@@ -66,6 +66,16 @@ class Hotel(models.Model):
         default=3
     )
 
+    average_rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        default=0.00
+    )
+
+    total_reviews = models.PositiveIntegerField(
+        default=0
+    )
+
     amenities = models.ManyToManyField(
         Amenity,
         blank=True
@@ -75,7 +85,9 @@ class Hotel(models.Model):
 
     check_out_time = models.TimeField()
 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(
+        default=True
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True
