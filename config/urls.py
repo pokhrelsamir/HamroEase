@@ -40,6 +40,8 @@ urlpatterns = [
     # Reviews API
     path("api/", include("apps.reviews.api_urls")),
     
+    # Wishlist API
+    path("api/", include("apps.wishlist.urls")),
 
     # API Documentation
     path(

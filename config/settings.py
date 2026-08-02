@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "apps.api",
     'rest_framework_simplejwt.token_blacklist',
-    "apps.payments",
+    "apps.payments.apps.PaymentsConfig",
     "apps.reviews.apps.ReviewsConfig",
+    "apps.wishlist.apps.WishlistConfig",
 ]
 
 # -----------------------------------------------------------------------------
