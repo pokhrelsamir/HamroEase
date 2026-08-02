@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('guests', models.PositiveIntegerField(default=1)),
                 ('total_amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('special_request', models.TextField(blank=True)),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('checked_in', 'Checked In'), ('checked_out', 'Checked Out'), ('cancelled', 'Cancelled')], default='pending', max_length=20)),
+                ('status', models.CharField(choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('checked_in', 'Checked In'), ('COMPLETED', 'Checked Out'), ('cancelled', 'Cancelled')], default='pending', max_length=20)),
                 ('payment_status', models.CharField(choices=[('pending', 'Pending'), ('paid', 'Paid'), ('refunded', 'Refunded')], default='pending', max_length=20)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),

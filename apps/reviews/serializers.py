@@ -35,7 +35,7 @@ class ReviewSerializer(serializers.ModelSerializer):
                 "You can only review your own booking."
             )
 
-        if booking.status != Booking.Status.CHECKED_OUT:
+        if booking.status != Booking.Status.COMPLETED:
             raise serializers.ValidationError(
                 "You can only review completed bookings."
             )
