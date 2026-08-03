@@ -41,7 +41,7 @@ urlpatterns = [
     path("api/", include("apps.reviews.api_urls")),
     
     # Wishlist API
-    path("api/", include("apps.wishlist.urls")),
+    path("api/", include("apps.wishlist.api_urls")),
 
     # API Documentation
     path(

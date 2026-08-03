@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "apps.payments.apps.PaymentsConfig",
     "apps.reviews.apps.ReviewsConfig",
     "apps.wishlist.apps.WishlistConfig",
+    "django_extensions",
 ]
 
 # -----------------------------------------------------------------------------
