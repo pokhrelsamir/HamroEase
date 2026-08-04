@@ -24,6 +24,7 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
 
     GET     /api/notifications/
     PATCH   /api/notifications/{id}/read/
+    DELETE  /api/notifications/{id}/delete/
     PATCH   /api/notifications/read-all/
     DELETE  /api/notifications/clear/
     """
@@ -39,15 +40,16 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     @extend_schema(
         tags=["Notifications"],
         summary="Mark Notification as Read",
+        request=None,
         responses={
             200: {
                 "type": "object",
                 "properties": {
                     "detail": {
                         "type": "string",
-                        "example": "Notification marked as read.",
+                        "example": "Notification marked as read."
                     }
-                },
+                }
             }
         },
     )
@@ -73,16 +75,51 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
 
     @extend_schema(
         tags=["Notifications"],
-        summary="Mark All Notifications as Read",
+        summary="Delete Notification",
+        request=None,
         responses={
             200: {
                 "type": "object",
                 "properties": {
                     "detail": {
                         "type": "string",
-                        "example": "All notifications marked as read.",
+                        "example": "Notification deleted successfully."
                     }
-                },
+                }
+            }
+        },
+    )
+    @action(
+        detail=True,
+        methods=["delete"],
+        url_path="delete",
+    )
+    def delete(self, request, pk=None):
+
+        notification = self.get_object()
+
+        notification.delete()
+
+        return Response(
+            {
+                "detail": "Notification deleted successfully."
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    @extend_schema(
+        tags=["Notifications"],
+        summary="Mark All Notifications as Read",
+        request=None,
+        responses={
+            200: {
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "example": "All notifications marked as read."
+                    }
+                }
             }
         },
     )
@@ -107,15 +144,16 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     @extend_schema(
         tags=["Notifications"],
         summary="Clear All Notifications",
+        request=None,
         responses={
             200: {
                 "type": "object",
                 "properties": {
                     "detail": {
                         "type": "string",
-                        "example": "All notifications deleted.",
+                        "example": "All notifications deleted."
                     }
-                },
+                }
             }
         },
     )
