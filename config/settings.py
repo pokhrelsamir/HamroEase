@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "apps.reviews.apps.ReviewsConfig",
     "apps.wishlist.apps.WishlistConfig",
     "django_extensions",
+    "apps.notifications.apps.NotificationsConfig",
 ]
 
 # -----------------------------------------------------------------------------

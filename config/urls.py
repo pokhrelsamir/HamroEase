@@ -43,6 +43,9 @@ urlpatterns = [
     # Wishlist API
     path("api/", include("apps.wishlist.api_urls")),
 
+    # Notifications API
+    path("api/", include("apps.notifications.api_urls")),
+
     # API Documentation
     path(
         "schema/",
