@@ -17,16 +17,16 @@ from .serializers import NotificationSerializer
         tags=["Notifications"],
         summary="My Notifications",
     ),
-    retrieve=extend_schema(
-        tags=["Notifications"],
-        summary="Notification Details",
-    ),
-    destroy=extend_schema(
-        tags=["Notifications"],
-        summary="Delete Notification",
-    ),
 )
 class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Notification API
+
+    GET     /api/notifications/
+    PATCH   /api/notifications/{id}/read/
+    PATCH   /api/notifications/read-all/
+    DELETE  /api/notifications/clear/
+    """
 
     serializer_class = NotificationSerializer
     permission_classes = [IsAuthenticated]
@@ -34,23 +34,35 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return Notification.objects.filter(
             user=self.request.user
-        ).order_by("-created_at")
+        )
 
     @extend_schema(
         tags=["Notifications"],
         summary="Mark Notification as Read",
+        responses={
+            200: {
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "example": "Notification marked as read.",
+                    }
+                },
+            }
+        },
     )
     @action(
         detail=True,
         methods=["patch"],
         url_path="read",
     )
-    def mark_as_read(self, request, pk=None):
+    def read(self, request, pk=None):
 
         notification = self.get_object()
 
-        notification.is_read = True
-        notification.save()
+        if not notification.is_read:
+            notification.is_read = True
+            notification.save(update_fields=["is_read"])
 
         return Response(
             {
@@ -62,17 +74,28 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     @extend_schema(
         tags=["Notifications"],
         summary="Mark All Notifications as Read",
+        responses={
+            200: {
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "example": "All notifications marked as read.",
+                    }
+                },
+            }
+        },
     )
     @action(
         detail=False,
         methods=["patch"],
         url_path="read-all",
     )
-    def mark_all_as_read(self, request):
+    def read_all(self, request):
 
-        self.get_queryset().update(
-            is_read=True
-        )
+        self.get_queryset().filter(
+            is_read=False
+        ).update(is_read=True)
 
         return Response(
             {
@@ -83,21 +106,31 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
 
     @extend_schema(
         tags=["Notifications"],
-        summary="Delete Notification",
+        summary="Clear All Notifications",
+        responses={
+            200: {
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "example": "All notifications deleted.",
+                    }
+                },
+            }
+        },
     )
     @action(
-        detail=True,
+        detail=False,
         methods=["delete"],
-        url_path="delete",
+        url_path="clear",
     )
-    def delete_notification(self, request, pk=None):
+    def clear(self, request):
 
-        notification = self.get_object()
-        notification.delete()
+        self.get_queryset().delete()
 
         return Response(
             {
-                "detail": "Notification deleted successfully."
+                "detail": "All notifications deleted."
             },
             status=status.HTTP_200_OK,
         )
