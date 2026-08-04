@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "apps.wishlist.apps.WishlistConfig",
     "django_extensions",
     "apps.notifications.apps.NotificationsConfig",
+    "django_filters",
 ]
 
 # -----------------------------------------------------------------------------
@@ -203,8 +204,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
+
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ),
 }
+
 from datetime import timedelta
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
