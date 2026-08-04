@@ -7,7 +7,6 @@ from apps.reviews.models import Review
 
 from .models import Notification
 
-
 # ======================================================
 # Booking Notifications
 # ======================================================
@@ -50,7 +49,6 @@ def booking_notification(sender, instance, created, **kwargs):
                 f"has been cancelled."
             ),
         )
-
 
 # ======================================================
 # Payment Notifications
