@@ -4,8 +4,8 @@ from drf_spectacular.utils import (
 )
 
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
 
 from apps.accounts.models import CustomUser
 from apps.permissions.permissions import IsHotelManager
@@ -49,7 +49,11 @@ from .serializers import (
 )
 class HotelViewSet(viewsets.ModelViewSet):
 
-    queryset = Hotel.objects.all()
+    queryset = (
+        Hotel.objects.select_related("manager")
+        .prefetch_related("amenities")
+    )
+
     serializer_class = HotelSerializer
 
     # Filtering
@@ -79,16 +83,19 @@ class HotelViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
 
         if self.action == "create":
-            return [IsHotelManager()]
+            permission_classes = [IsHotelManager]
 
         elif self.action in [
             "update",
             "partial_update",
             "destroy",
         ]:
-            return [IsAuthenticated()]
+            permission_classes = [IsAuthenticated]
 
-        return []
+        else:
+            permission_classes = []
+
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
 
@@ -155,7 +162,15 @@ class HotelViewSet(viewsets.ModelViewSet):
 )
 class RoomViewSet(viewsets.ModelViewSet):
 
-    queryset = Room.objects.select_related("hotel")
+    queryset = (
+        Room.objects.select_related(
+            "hotel",
+            "hotel__manager",
+        ).prefetch_related(
+            "amenities",
+        )
+    )
+
     serializer_class = RoomSerializer
 
     # Filtering
@@ -238,236 +253,3 @@ class RoomViewSet(viewsets.ModelViewSet):
             )
 
         instance.delete()
-
-# # 1
-# from django_filters.rest_framework import DjangoFilterBackend
-
-# from drf_spectacular.utils import (
-#     OpenApiParameter,
-#     OpenApiTypes,
-#     extend_schema,
-#     extend_schema_view,
-# )
-
-# from rest_framework import filters, viewsets
-
-# from .models import Hotel, Room
-# from .serializers import (
-#     HotelSerializer,
-#     RoomSerializer,
-# )
-
-
-# # ==========================================================
-# # Hotels API
-# # ==========================================================
-
-# @extend_schema_view(
-#     list=extend_schema(
-#         tags=["Hotels"],
-#         summary="List Hotels",
-#         parameters=[
-#             OpenApiParameter(
-#                 name="search",
-#                 description="Search by hotel name, city, country or address",
-#                 required=False,
-#                 type=OpenApiTypes.STR,
-#             ),
-#             OpenApiParameter(
-#                 name="city",
-#                 description="Filter hotels by city",
-#                 required=False,
-#                 type=OpenApiTypes.STR,
-#             ),
-#             OpenApiParameter(
-#                 name="country",
-#                 description="Filter hotels by country",
-#                 required=False,
-#                 type=OpenApiTypes.STR,
-#             ),
-#             OpenApiParameter(
-#                 name="ordering",
-#                 description=(
-#                     "Order results by: "
-#                     "name, -name, created_at, -created_at"
-#                 ),
-#                 required=False,
-#                 type=OpenApiTypes.STR,
-#             ),
-#         ],
-#     ),
-#     retrieve=extend_schema(
-#         tags=["Hotels"],
-#         summary="Retrieve Hotel",
-#     ),
-#     create=extend_schema(
-#         tags=["Hotels"],
-#         summary="Create Hotel",
-#     ),
-#     update=extend_schema(
-#         tags=["Hotels"],
-#         summary="Update Hotel",
-#     ),
-#     partial_update=extend_schema(
-#         tags=["Hotels"],
-#         summary="Partial Update Hotel",
-#     ),
-#     destroy=extend_schema(
-#         tags=["Hotels"],
-#         summary="Delete Hotel",
-#     ),
-# )
-# class HotelViewSet(viewsets.ModelViewSet):
-
-#     queryset = Hotel.objects.all()
-#     serializer_class = HotelSerializer
-
-#     filter_backends = [
-#         DjangoFilterBackend,
-#         filters.SearchFilter,
-#         filters.OrderingFilter,
-#     ]
-
-#     filterset_fields = [
-#         "city",
-#         "country",
-#     ]
-
-#     search_fields = [
-#         "name",
-#         "city",
-#         "country",
-#         "address",
-#     ]
-
-#     ordering_fields = [
-#         "name",
-#         "created_at",
-#     ]
-
-#     ordering = [
-#         "-created_at",
-#     ]
-
-
-# # ==========================================================
-# # Rooms API
-# # ==========================================================
-
-# @extend_schema_view(
-#     list=extend_schema(
-#         tags=["Rooms"],
-#         summary="List Rooms",
-#     ),
-#     retrieve=extend_schema(
-#         tags=["Rooms"],
-#         summary="Retrieve Room",
-#     ),
-#     create=extend_schema(
-#         tags=["Rooms"],
-#         summary="Create Room",
-#     ),
-#     update=extend_schema(
-#         tags=["Rooms"],
-#         summary="Update Room",
-#     ),
-#     partial_update=extend_schema(
-#         tags=["Rooms"],
-#         summary="Partial Update Room",
-#     ),
-#     destroy=extend_schema(
-#         tags=["Rooms"],
-#         summary="Delete Room",
-#     ),
-# )
-# class RoomViewSet(viewsets.ModelViewSet):
-
-#     queryset = Room.objects.all()
-#     serializer_class = RoomSerializer
-
-
-
-# 2.
-
-# from drf_spectacular.utils import (
-#     extend_schema,
-#     extend_schema_view,
-# )
-
-# from rest_framework import viewsets
-
-# from .models import Hotel, Room
-# from .serializers import (
-#     HotelSerializer,
-#     RoomSerializer,
-# )
-
-
-# # ==========================================================
-# # Hotels API
-# # ==========================================================
-
-# @extend_schema_view(
-#     list=extend_schema(
-#         tags=["Hotels"],
-#         summary="List Hotels",
-#     ),
-#     retrieve=extend_schema(
-#         tags=["Hotels"],
-#         summary="Retrieve Hotel",
-#     ),
-#     create=extend_schema(
-#         tags=["Hotels"],
-#         summary="Create Hotel",
-#     ),
-#     update=extend_schema(
-#         tags=["Hotels"],
-#         summary="Update Hotel",
-#     ),
-#     partial_update=extend_schema(
-#         tags=["Hotels"],
-#         summary="Partial Update Hotel",
-#     ),
-#     destroy=extend_schema(
-#         tags=["Hotels"],
-#         summary="Delete Hotel",
-#     ),
-# )
-# class HotelViewSet(viewsets.ModelViewSet):
-#     queryset = Hotel.objects.all()
-#     serializer_class = HotelSerializer
-
-
-# # ==========================================================
-# # Rooms API
-# # ==========================================================
-
-# @extend_schema_view(
-#     list=extend_schema(
-#         tags=["Rooms"],
-#         summary="List Rooms",
-#     ),
-#     retrieve=extend_schema(
-#         tags=["Rooms"],
-#         summary="Retrieve Room",
-#     ),
-#     create=extend_schema(
-#         tags=["Rooms"],
-#         summary="Create Room",
-#     ),
-#     update=extend_schema(
-#         tags=["Rooms"],
-#         summary="Update Room",
-#     ),
-#     partial_update=extend_schema(
-#         tags=["Rooms"],
-#         summary="Partial Update Room",
-#     ),
-#     destroy=extend_schema(
-#         tags=["Rooms"],
-#         summary="Delete Room",
-#     ),
-# )
-# class RoomViewSet(viewsets.ModelViewSet):
-#     queryset = Room.objects.all()
-#     serializer_class = RoomSerializer
