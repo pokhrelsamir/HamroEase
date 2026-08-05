@@ -213,7 +213,7 @@ REST_FRAMEWORK = {
 
     # Pagination
     "DEFAULT_PAGINATION_CLASS": (
-        "rest_framework.pagination.PageNumberPagination"
+        "apps.api.pagination.StandardResultsSetPagination"
     ),
     "PAGE_SIZE": 10,
 }
