@@ -1,17 +1,30 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import (
+    BasePermission,
+    SAFE_METHODS,
+)
 
+from apps.accounts.models import CustomUser
+
+
+# ==========================================================
+# Admin Only
+# ==========================================================
 
 class IsAdmin(BasePermission):
     """
-    Allows access only to admin users.
+    Allows access only to admins.
     """
 
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated
-            and request.user.is_staff
+            and request.user.role == CustomUser.Role.ADMIN
         )
 
+
+# ==========================================================
+# Hotel Manager Only
+# ==========================================================
 
 class IsHotelManager(BasePermission):
     """
@@ -21,17 +34,26 @@ class IsHotelManager(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated
-            and getattr(request.user, "role", None) == "manager"
+            and request.user.role == CustomUser.Role.HOTEL_MANAGER
         )
 
 
+# ==========================================================
+# Hotel Owner
+# ==========================================================
+
 class IsHotelOwnerOrReadOnly(BasePermission):
     """
-    Anyone can view.
-    Only the hotel's manager can modify it.
+    Read for everyone.
+    Update/Delete only by hotel owner.
     """
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(
+        self,
+        request,
+        view,
+        obj,
+    ):
 
         if request.method in SAFE_METHODS:
             return True
@@ -39,21 +61,39 @@ class IsHotelOwnerOrReadOnly(BasePermission):
         return obj.manager == request.user
 
 
+# ==========================================================
+# Booking Owner
+# ==========================================================
+
 class IsBookingOwner(BasePermission):
     """
-    Only the booking owner can access it.
+    Only booking owner can access.
     """
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(
+        self,
+        request,
+        view,
+        obj,
+    ):
         return obj.user == request.user
 
 
+# ==========================================================
+# Review Owner
+# ==========================================================
+
 class IsReviewOwner(BasePermission):
     """
-    Only the review owner can modify/delete it.
+    Only review owner can edit/delete.
     """
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(
+        self,
+        request,
+        view,
+        obj,
+    ):
 
         if request.method in SAFE_METHODS:
             return True
@@ -61,10 +101,19 @@ class IsReviewOwner(BasePermission):
         return obj.user == request.user
 
 
+# ==========================================================
+# Payment Owner
+# ==========================================================
+
 class IsPaymentOwner(BasePermission):
     """
-    Only the payment owner can access it.
+    Only payment owner can access.
     """
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(
+        self,
+        request,
+        view,
+        obj,
+    ):
         return obj.booking.user == request.user
