@@ -1,22 +1,238 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ hotel.name }} | HamroEase
+{% endblock %}
 
 {% block content %}
 
-<h2>{{ hotel.name }}</h2>
+<section class="py-5">
 
-{% if hotel.thumbnail %}
-<img src="{{ hotel.thumbnail.url }}" class="img-fluid mb-3" width="400">
-{% endif %}
+    <div class="container">
 
-<p><strong>Description:</strong> {{ hotel.description }}</p>
-<p><strong>Address:</strong> {{ hotel.address }}</p>
-<p><strong>City:</strong> {{ hotel.city }}</p>
-<p><strong>Country:</strong> {{ hotel.country }}</p>
-<p><strong>Email:</strong> {{ hotel.email }}</p>
-<p><strong>Phone:</strong> {{ hotel.phone }}</p>
+        <div class="row">
 
-<a href="{% url 'hotel_list' %}" class="btn btn-secondary">
-    Back
-</a>
+            <!-- Hotel Image -->
+
+            <div class="col-lg-6 mb-4">
+
+                {% if hotel.thumbnail %}
+
+                    <img
+                        src="{{ hotel.thumbnail.url }}"
+                        class="img-fluid rounded shadow"
+                        alt="{{ hotel.name }}">
+
+                {% else %}
+
+                    <img
+                        src="{% static 'images/hotel-placeholder.jpg' %}"
+                        class="img-fluid rounded shadow"
+                        alt="Hotel">
+
+                {% endif %}
+
+            </div>
+
+            <!-- Hotel Information -->
+
+            <div class="col-lg-6">
+
+                <h2 class="fw-bold">
+
+                    {{ hotel.name }}
+
+                </h2>
+
+                <p class="text-muted">
+
+                    <i class="fa-solid fa-location-dot text-danger"></i>
+
+                    {{ hotel.city }}, {{ hotel.country }}
+
+                </p>
+
+                <div class="mb-3">
+
+                    <span class="badge bg-warning text-dark">
+
+                        ⭐ {{ hotel.star_rating }} Star Hotel
+
+                    </span>
+
+                    <span class="badge bg-success">
+
+                        {{ hotel.average_rating }}/5 Rating
+
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <h5>
+
+                    Description
+
+                </h5>
+
+                <p>
+
+                    {{ hotel.description }}
+
+                </p>
+
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Address</strong><br>
+
+                            {{ hotel.address }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Phone</strong><br>
+
+                            {{ hotel.phone }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Email</strong><br>
+
+                            {{ hotel.email }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Check In</strong><br>
+
+                            {{ hotel.check_in_time }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Check Out</strong><br>
+
+                            {{ hotel.check_out_time }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Total Reviews</strong><br>
+
+                            {{ hotel.total_reviews }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h5>
+
+                    Amenities
+
+                </h5>
+
+                <div class="mb-4">
+
+                    {% for amenity in hotel.amenities.all %}
+
+                        <span class="badge bg-primary me-2 mb-2">
+
+                            {{ amenity.name }}
+
+                        </span>
+
+                    {% empty %}
+
+                        <span class="text-muted">
+
+                            No amenities available.
+
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Book Now
+
+                    </a>
+
+                    <a
+                        href="{% url 'hotel_update' hotel.id %}"
+                        class="btn btn-outline-warning">
+
+                        Edit
+
+                    </a>
+
+                    <a
+                        href="{% url 'hotel_list' %}"
+                        class="btn btn-outline-secondary">
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}
