@@ -1,6 +1,7 @@
 /* ==========================================
    Google Font
 ========================================== */
+@import url("navbar.css");
 
 body {
     font-family: "Poppins", sans-serif;
