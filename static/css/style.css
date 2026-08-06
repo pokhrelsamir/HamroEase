@@ -2,7 +2,7 @@
    Google Font
 ========================================== */
 @import url("navbar.css");
-
+@import url("footer.css");
 body {
     font-family: "Poppins", sans-serif;
     background: #f8f9fa;
