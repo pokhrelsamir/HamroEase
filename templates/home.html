@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Home | HamroEase
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center min-vh-100">
+
+            <!-- Left Content -->
+            <div class="col-lg-6">
+
+                <span class="badge bg-primary mb-3">
+                    Welcome to HamroEase
+                </span>
+
+                <h1 class="display-4 fw-bold">
+
+                    Find Your Perfect Stay
+                    Anywhere in Nepal
+
+                </h1>
+
+                <p class="lead text-muted mt-4">
+
+                    Discover comfortable hotels, compare prices,
+                    explore amenities, and book your stay in just
+                    a few clicks.
+
+                </p>
+
+                <div class="mt-4">
+
+                    <a href="{% url 'hotel-list' %}"
+                       class="btn btn-primary btn-lg me-3">
+
+                        Explore Hotels
+
+                    </a>
+
+                    <a href="#search"
+                       class="btn btn-outline-primary btn-lg">
+
+                        Book Now
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Right Image -->
+            <div class="col-lg-6 text-center">
+
+                <img src="{% static 'images/hero-hotel.png' %}"
+                     class="img-fluid hero-image"
+                     alt="Luxury Hotel">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
