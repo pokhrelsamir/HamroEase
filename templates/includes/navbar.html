@@ -7,99 +7,188 @@
         <!-- Logo -->
         <a class="navbar-brand fw-bold fs-3 text-primary"
            href="{% url 'home' %}">
+
+            <i class="fa-solid fa-hotel me-2"></i>
             HamroEase
+
         </a>
 
         <!-- Mobile Toggle -->
-
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarMenu">
+                data-bs-target="#navbarMenu"
+                aria-controls="navbarMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
 
         </button>
 
         <!-- Navigation -->
-
         <div class="collapse navbar-collapse"
              id="navbarMenu">
 
             <ul class="navbar-nav mx-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link"
+
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
                        href="{% url 'home' %}">
+
+                        <i class="fa-solid fa-house me-1"></i>
                         Home
+
                     </a>
+
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link"
+
+                    <a class="nav-link {% if request.resolver_match.url_name == 'hotel-list' %}active{% endif %}"
                        href="{% url 'hotel-list' %}">
+
+                        <i class="fa-solid fa-hotel me-1"></i>
                         Hotels
+
                     </a>
+
                 </li>
 
                 <li class="nav-item">
+
                     <a class="nav-link"
                        href="#">
+
+                        <i class="fa-solid fa-bed me-1"></i>
                         Rooms
+
                     </a>
+
                 </li>
 
                 <li class="nav-item">
+
                     <a class="nav-link"
                        href="#">
+
+                        <i class="fa-solid fa-circle-info me-1"></i>
                         About
+
                     </a>
+
                 </li>
 
                 <li class="nav-item">
+
                     <a class="nav-link"
                        href="#">
+
+                        <i class="fa-solid fa-envelope me-1"></i>
                         Contact
+
                     </a>
+
                 </li>
 
             </ul>
 
             <!-- Right Side -->
-
-            <ul class="navbar-nav">
+            <ul class="navbar-nav align-items-center">
 
                 {% if user.is_authenticated %}
 
+                    <!-- Notifications -->
+                    <li class="nav-item me-3">
+
+                        <a class="nav-link position-relative"
+                           href="#">
+
+                            <i class="fa-solid fa-bell fs-5"></i>
+
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+
+                        </a>
+
+                    </li>
+
+                    <!-- User Dropdown -->
                     <li class="nav-item dropdown">
 
-                        <a class="nav-link dropdown-toggle"
+                        <a class="nav-link dropdown-toggle d-flex align-items-center"
                            href="#"
-                           data-bs-toggle="dropdown">
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
 
-                            <i class="fa-solid fa-user"></i>
+                            {% if user.profile_picture %}
+
+                                <img src="{{ user.profile_picture.url }}"
+                                     alt="Profile"
+                                     class="rounded-circle me-2"
+                                     width="35"
+                                     height="35">
+
+                            {% else %}
+
+                                <i class="fa-solid fa-circle-user fs-4 me-2"></i>
+
+                            {% endif %}
+
                             {{ user.full_name }}
 
                         </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
 
                             <li>
-                                <a class="dropdown-item"
-                                   href="#">
-                                    Dashboard
-                                </a>
+
+                                <h6 class="dropdown-header">
+
+                                    {{ user.role }}
+
+                                </h6>
+
                             </li>
 
                             <li>
+
                                 <a class="dropdown-item"
                                    href="#">
+
+                                    <i class="fa-solid fa-gauge-high me-2"></i>
+
+                                    {% if user.role == "HOTEL_MANAGER" %}
+                                        Hotel Dashboard
+                                    {% elif user.role == "ADMIN" %}
+                                        Admin Dashboard
+                                    {% else %}
+                                        My Dashboard
+                                    {% endif %}
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a class="dropdown-item"
+                                   href="#">
+
+                                    <i class="fa-solid fa-user me-2"></i>
                                     My Profile
+
                                 </a>
+
                             </li>
 
                             <li>
+
                                 <hr class="dropdown-divider">
+
                             </li>
 
                             <li>
@@ -109,9 +198,10 @@
 
                                     {% csrf_token %}
 
-                                    <button
-                                        class="dropdown-item">
+                                    <button type="submit"
+                                            class="dropdown-item">
 
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
                                         Logout
 
                                     </button>
@@ -126,11 +216,13 @@
 
                 {% else %}
 
-                    <li class="nav-item">
+                    <li class="nav-item me-2">
 
-                        <a class="btn btn-outline-primary me-2"
+                        <a class="btn btn-outline-primary"
                            href="{% url 'login' %}">
+
                             Login
+
                         </a>
 
                     </li>
@@ -139,7 +231,9 @@
 
                         <a class="btn btn-primary"
                            href="{% url 'register' %}">
+
                             Register
+
                         </a>
 
                     </li>
