@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}
+Hotel Manager Dashboard | HamroEase
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- Welcome -->
+        <div class="mb-5">
+
+            <h1 class="fw-bold">
+                Welcome, {{ user.full_name }} 👋
+            </h1>
+
+            <p class="text-muted">
+                Manage your hotels, rooms, and reservations from one place.
+            </p>
+
+        </div>
+
+        <!-- Statistics -->
+        <div class="row g-4 mb-5">
+
+            <!-- Hotels -->
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-muted mb-1">
+                                    My Hotels
+                                </p>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ hotels_count|default:"0" }}
+                                </h3>
+                            </div>
+
+                            <i class="fa-solid fa-hotel fa-2x text-primary"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Rooms -->
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-muted mb-1">
+                                    Rooms
+                                </p>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ rooms_count|default:"0" }}
+                                </h3>
+                            </div>
+
+                            <i class="fa-solid fa-bed fa-2x text-primary"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bookings -->
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-muted mb-1">
+                                    Bookings
+                                </p>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ bookings_count|default:"0" }}
+                                </h3>
+                            </div>
+
+                            <i class="fa-solid fa-calendar-check fa-2x text-primary"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Revenue -->
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <p class="text-muted mb-1">
+                                    Revenue
+                                </p>
+
+                                <h3 class="fw-bold mb-0">
+                                    Rs. {{ total_revenue|default:"0" }}
+                                </h3>
+                            </div>
+
+                            <i class="fa-solid fa-money-bill-wave fa-2x text-primary"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Management -->
+        <div class="row g-4">
+
+            <!-- Manage Hotels -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <i class="fa-solid fa-hotel fa-2x text-primary mb-3"></i>
+
+                        <h5 class="fw-bold">
+                            Manage Hotels
+                        </h5>
+
+                        <p class="text-muted">
+                            Create, update, and manage your hotel properties.
+                        </p>
+
+                        <a href="{% url 'hotel-list' %}"
+                           class="btn btn-primary">
+
+                            Manage Hotels
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Manage Rooms -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <i class="fa-solid fa-bed fa-2x text-primary mb-3"></i>
+
+                        <h5 class="fw-bold">
+                            Manage Rooms
+                        </h5>
+
+                        <p class="text-muted">
+                            Manage rooms, pricing, amenities, and availability.
+                        </p>
+
+                        <a href="#"
+                           class="btn btn-primary">
+
+                            Manage Rooms
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bookings -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <i class="fa-solid fa-calendar-check fa-2x text-primary mb-3"></i>
+
+                        <h5 class="fw-bold">
+                            Reservations
+                        </h5>
+
+                        <p class="text-muted">
+                            View and manage reservations made by guests.
+                        </p>
+
+                        <a href="#"
+                           class="btn btn-primary">
+
+                            View Bookings
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
