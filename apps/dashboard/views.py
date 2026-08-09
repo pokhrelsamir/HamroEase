@@ -1,13 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
 from django.shortcuts import render
 
 from apps.accounts.models import CustomUser
 from apps.hotels.models import Hotel, Room
-
-# Uncomment these when the Booking and Payment models are ready.
-# from apps.bookings.models import Booking
-# from apps.payments.models import Payment
 
 
 @login_required
@@ -15,9 +10,9 @@ def dashboard(request):
 
     user = request.user
 
-    # ======================================================
+    # ==========================================================
     # ADMIN DASHBOARD
-    # ======================================================
+    # ==========================================================
 
     if user.role == CustomUser.Role.ADMIN:
 
@@ -25,8 +20,7 @@ def dashboard(request):
             "users_count": CustomUser.objects.count(),
             "hotels_count": Hotel.objects.count(),
             "rooms_count": Room.objects.count(),
-
-            # Enable when Payment model is ready.
+            "bookings_count": 0,
             "total_revenue": 0,
         }
 
@@ -36,12 +30,11 @@ def dashboard(request):
             context,
         )
 
-
-    # ======================================================
+    # ==========================================================
     # HOTEL MANAGER DASHBOARD
-    # ======================================================
+    # ==========================================================
 
-    elif user.role == CustomUser.Role.HOTEL_MANAGER:
+    if user.role == CustomUser.Role.HOTEL_MANAGER:
 
         hotels = Hotel.objects.filter(
             manager=user
@@ -54,11 +47,7 @@ def dashboard(request):
         context = {
             "hotels_count": hotels.count(),
             "rooms_count": rooms.count(),
-
-            # Enable when Booking model is ready.
             "bookings_count": 0,
-
-            # Enable when Payment model is ready.
             "total_revenue": 0,
         }
 
@@ -68,10 +57,9 @@ def dashboard(request):
             context,
         )
 
-
-    # ======================================================
+    # ==========================================================
     # GUEST DASHBOARD
-    # ======================================================
+    # ==========================================================
 
     context = {
         "hotels_count": Hotel.objects.filter(
