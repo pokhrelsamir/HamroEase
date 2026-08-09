@@ -1,5 +1,13 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.shortcuts import render
+
+from apps.accounts.models import CustomUser
+from apps.hotels.models import Hotel, Room
+
+# Uncomment these when the Booking and Payment models are ready.
+# from apps.bookings.models import Booking
+# from apps.payments.models import Payment
 
 
 @login_required
@@ -7,13 +15,72 @@ def dashboard(request):
 
     user = request.user
 
-    if user.role == "HOTEL_MANAGER":
-        template = "dashboard/manager_dashboard.html"
+    # ======================================================
+    # ADMIN DASHBOARD
+    # ======================================================
 
-    elif user.role == "ADMIN":
-        template = "dashboard/admin_dashboard.html"
+    if user.role == CustomUser.Role.ADMIN:
 
-    else:
-        template = "dashboard/guest_dashboard.html"
+        context = {
+            "users_count": CustomUser.objects.count(),
+            "hotels_count": Hotel.objects.count(),
+            "rooms_count": Room.objects.count(),
 
-    return render(request, template)
+            # Enable when Payment model is ready.
+            "total_revenue": 0,
+        }
+
+        return render(
+            request,
+            "dashboard/admin_dashboard.html",
+            context,
+        )
+
+
+    # ======================================================
+    # HOTEL MANAGER DASHBOARD
+    # ======================================================
+
+    elif user.role == CustomUser.Role.HOTEL_MANAGER:
+
+        hotels = Hotel.objects.filter(
+            manager=user
+        )
+
+        rooms = Room.objects.filter(
+            hotel__manager=user
+        )
+
+        context = {
+            "hotels_count": hotels.count(),
+            "rooms_count": rooms.count(),
+
+            # Enable when Booking model is ready.
+            "bookings_count": 0,
+
+            # Enable when Payment model is ready.
+            "total_revenue": 0,
+        }
+
+        return render(
+            request,
+            "dashboard/manager_dashboard.html",
+            context,
+        )
+
+
+    # ======================================================
+    # GUEST DASHBOARD
+    # ======================================================
+
+    context = {
+        "hotels_count": Hotel.objects.filter(
+            is_active=True
+        ).count(),
+    }
+
+    return render(
+        request,
+        "dashboard/guest_dashboard.html",
+        context,
+    )
