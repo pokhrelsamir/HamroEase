@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}
+Guest Dashboard | HamroEase
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- Welcome -->
+        <div class="mb-5">
+
+            <h1 class="fw-bold">
+                Welcome, {{ user.full_name }} 👋
+            </h1>
+
+            <p class="text-muted">
+                Manage your bookings and discover your next stay.
+            </p>
+
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="row g-4">
+
+            <!-- My Bookings -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <i class="fa-solid fa-calendar-check fa-2x text-primary"></i>
+                        </div>
+
+                        <h5 class="card-title">
+                            My Bookings
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            View and manage your hotel reservations.
+                        </p>
+
+                        <a href="#" class="btn btn-primary">
+                            View Bookings
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Find Hotels -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <i class="fa-solid fa-hotel fa-2x text-primary"></i>
+                        </div>
+
+                        <h5 class="card-title">
+                            Find Hotels
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            Explore hotels and find your perfect stay.
+                        </p>
+
+                        <a href="{% url 'hotel-list' %}"
+                           class="btn btn-primary">
+
+                            Explore Hotels
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Profile -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <i class="fa-solid fa-user fa-2x text-primary"></i>
+                        </div>
+
+                        <h5 class="card-title">
+                            My Profile
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            View and update your personal information.
+                        </p>
+
+                        <a href="#" class="btn btn-primary">
+                            View Profile
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

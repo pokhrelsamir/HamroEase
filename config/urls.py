@@ -46,6 +46,9 @@ urlpatterns = [
     # Notifications API
     path("api/notifications/", include("apps.notifications.api_urls")),
 
+    #Dashboard API
+    path("dashboard/", include("apps.dashboard.urls")),
+
     # API Documentation
     path(
         "schema/",
