@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard | HamroEase
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Welcome -->
+    <div class="mb-5">
+
+        <h1 class="fw-bold">
+            Admin Dashboard 👋
+        </h1>
+
+        <p class="text-muted">
+            Manage users, hotels, bookings, payments, and the HamroEase platform.
+        </p>
+
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-5">
+
+        <!-- Users -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Users
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ users_count|default:"0" }}
+                            </h3>
+
+                        </div>
+
+                        <i class="fa-solid fa-users fa-2x text-primary"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Hotels -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Hotels
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ hotels_count|default:"0" }}
+                            </h3>
+
+                        </div>
+
+                        <i class="fa-solid fa-hotel fa-2x text-primary"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bookings -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Bookings
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ bookings_count|default:"0" }}
+                            </h3>
+
+                        </div>
+
+                        <i class="fa-solid fa-calendar-check fa-2x text-primary"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payments -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Payments
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                Rs. {{ total_revenue|default:"0" }}
+                            </h3>
+
+                        </div>
+
+                        <i class="fa-solid fa-money-bill-wave fa-2x text-primary"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Management -->
+    <div class="row g-4">
+
+        <!-- Users -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-users fa-2x text-primary mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        User Management
+                    </h5>
+
+                    <p class="text-muted">
+                        Manage guests, hotel managers, and administrator accounts.
+                    </p>
+
+                    <a href="/admin/"
+                       class="btn btn-primary">
+
+                        Manage Users
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Hotels -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-hotel fa-2x text-primary mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        Hotel Management
+                    </h5>
+
+                    <p class="text-muted">
+                        Review and manage registered hotels and their properties.
+                    </p>
+
+                    <a href="{% url 'hotel-list' %}"
+                       class="btn btn-primary">
+
+                        Manage Hotels
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bookings -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-calendar-check fa-2x text-primary mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        Booking Management
+                    </h5>
+
+                    <p class="text-muted">
+                        Monitor and manage hotel reservations across the platform.
+                    </p>
+
+                    <a href="/admin/"
+                       class="btn btn-primary">
+
+                        Manage Bookings
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payments -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-credit-card fa-2x text-primary mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        Payment Management
+                    </h5>
+
+                    <p class="text-muted">
+                        Monitor payment transactions and payment status.
+                    </p>
+
+                    <a href="/admin/"
+                       class="btn btn-primary">
+
+                        Manage Payments
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Reviews -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-star fa-2x text-primary mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        Review Management
+                    </h5>
+
+                    <p class="text-muted">
+                        Monitor customer reviews and ratings.
+                    </p>
+
+                    <a href="/admin/"
+                       class="btn btn-primary">
+
+                        Manage Reviews
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Django Admin -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-gear fa-2x text-primary mb-3"></i>
+
+                    <h5 class="fw-bold">
+                        System Administration
+                    </h5>
+
+                    <p class="text-muted">
+                        Access the Django administration panel and manage the system.
+                    </p>
+
+                    <a href="/admin/"
+                       class="btn btn-primary">
+
+                        Open Admin Panel
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
